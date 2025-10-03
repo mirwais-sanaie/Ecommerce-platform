@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 function Navbar() {
@@ -25,9 +26,9 @@ function Navbar() {
               pathName === navLink.link ? "underline" : ""
             }`}
           >
-            <a href={navLink.link} className="text-white font-semibold">
+            <Link href={navLink.link} className="text-white font-semibold">
               {navLink.name}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
