@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "json-server": "json-server --watch database/db.json --port 8000"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "json-server": "^1.0.0-beta.3",
     "lucide-react": "^0.544.0",
     "next": "15.5.4",
     "react": "19.1.0",

@@ -1,0 +1,184 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "iPhone 15 Pro",
+      "price": 1199.99,
+      "description": "Latest Apple iPhone with A17 Pro chip, 128GB storage, and titanium body.",
+      "category": "Smartphones",
+      "image": "https://picsum.photos/seed/iphone15/800/800",
+      "inStock": true
+    },
+    {
+      "id": 2,
+      "title": "Samsung Galaxy S25",
+      "price": 1099.99,
+      "description": "Flagship Samsung phone with Snapdragon 8 Gen 3 processor and 256GB storage.",
+      "category": "Smartphones",
+      "image": "https://picsum.photos/seed/galaxy25/800/800",
+      "inStock": true
+    },
+    {
+      "id": 3,
+      "title": "MacBook Air M3",
+      "price": 1399.99,
+      "description": "13-inch Apple MacBook Air with M3 chip, 16GB RAM, 512GB SSD.",
+      "category": "Laptops",
+      "image": "https://picsum.photos/seed/macbookair/800/800",
+      "inStock": true
+    },
+    {
+      "id": 4,
+      "title": "Sony WH-1000XM5",
+      "price": 399.99,
+      "description": "Industry-leading noise-cancelling headphones with 30-hour battery life.",
+      "category": "Headphones",
+      "image": "https://picsum.photos/seed/sonyheadphones/800/800",
+      "inStock": true
+    },
+    {
+      "id": 5,
+      "title": "PlayStation 5",
+      "price": 499.99,
+      "description": "Sony next-gen console with ultra-fast SSD and 4K gaming support.",
+      "category": "Gaming",
+      "image": "https://picsum.photos/seed/ps5/800/800",
+      "inStock": false
+    },
+    {
+      "id": 6,
+      "title": "Xbox Series X",
+      "price": 499.99,
+      "description": "Microsoft’s most powerful console, supporting 4K gaming at 120fps.",
+      "category": "Gaming",
+      "image": "https://picsum.photos/seed/xbox/800/800",
+      "inStock": true
+    },
+    {
+      "id": 7,
+      "title": "Dell XPS 15",
+      "price": 1799.99,
+      "description": "15-inch laptop with Intel i7, 32GB RAM, 1TB SSD and OLED display.",
+      "category": "Laptops",
+      "image": "https://picsum.photos/seed/dellxps/800/800",
+      "inStock": true
+    },
+    {
+      "id": 8,
+      "title": "Apple Watch Ultra 2",
+      "price": 799.99,
+      "description": "Premium smartwatch with titanium case and advanced health tracking.",
+      "category": "Wearables",
+      "image": "https://picsum.photos/seed/applewatch/800/800",
+      "inStock": true
+    },
+    {
+      "id": 9,
+      "title": "iPad Pro 12.9",
+      "price": 1299.99,
+      "description": "Apple iPad Pro with M2 chip, Liquid Retina XDR display, and Apple Pencil support.",
+      "category": "Tablets",
+      "image": "https://picsum.photos/seed/ipad/800/800",
+      "inStock": true
+    },
+    {
+      "id": 10,
+      "title": "Kindle Paperwhite",
+      "price": 149.99,
+      "description": "Amazon’s popular e-reader with 6.8-inch display and adjustable warm light.",
+      "category": "Tablets",
+      "image": "https://picsum.photos/seed/kindle/800/800",
+      "inStock": true
+    },
+    {
+      "id": 11,
+      "title": "Canon EOS R6 II",
+      "price": 2499.99,
+      "description": "Professional full-frame mirrorless camera with 24MP sensor and 4K video.",
+      "category": "Cameras",
+      "image": "https://picsum.photos/seed/canon/800/800",
+      "inStock": false
+    },
+    {
+      "id": 12,
+      "title": "Nikon Z7 II",
+      "price": 2999.99,
+      "description": "High-resolution mirrorless camera with 45.7MP sensor and dual processors.",
+      "category": "Cameras",
+      "image": "https://picsum.photos/seed/nikonz7/800/800",
+      "inStock": true
+    },
+    {
+      "id": 13,
+      "title": "Bose SoundLink Revolve+",
+      "price": 299.99,
+      "description": "Portable Bluetooth speaker with 360-degree sound and long battery life.",
+      "category": "Speakers",
+      "image": "https://picsum.photos/seed/bosespeaker/800/800",
+      "inStock": true
+    },
+    {
+      "id": 14,
+      "title": "JBL Flip 6",
+      "price": 129.99,
+      "description": "Waterproof portable speaker with powerful bass and rugged design.",
+      "category": "Speakers",
+      "image": "https://picsum.photos/seed/jblflip/800/800",
+      "inStock": true
+    },
+    {
+      "id": 15,
+      "title": "GoPro Hero 12",
+      "price": 399.99,
+      "description": "Action camera with 5.3K video, HyperSmooth stabilization, and waterproof design.",
+      "category": "Cameras",
+      "image": "https://picsum.photos/seed/gopro/800/800",
+      "inStock": true
+    },
+    {
+      "id": 16,
+      "title": "Logitech MX Master 3S",
+      "price": 129.99,
+      "description": "Advanced wireless mouse with ergonomic design and customizable buttons.",
+      "category": "Accessories",
+      "image": "https://picsum.photos/seed/mxmaster/800/800",
+      "inStock": true
+    },
+    {
+      "id": 17,
+      "title": "Razer BlackWidow V4",
+      "price": 199.99,
+      "description": "Mechanical gaming keyboard with RGB lighting and tactile switches.",
+      "category": "Accessories",
+      "image": "https://picsum.photos/seed/razerkeyboard/800/800",
+      "inStock": true
+    },
+    {
+      "id": 18,
+      "title": "Dyson V15 Detect",
+      "price": 749.99,
+      "description": "High-performance cordless vacuum cleaner with laser dust detection.",
+      "category": "Home Appliances",
+      "image": "https://picsum.photos/seed/dyson/800/800",
+      "inStock": true
+    },
+    {
+      "id": 19,
+      "title": "Instant Pot Duo 7-in-1",
+      "price": 99.99,
+      "description": "Multi-use electric pressure cooker with 7 cooking modes.",
+      "category": "Home Appliances",
+      "image": "https://picsum.photos/seed/instantpot/800/800",
+      "inStock": true
+    },
+    {
+      "id": 20,
+      "title": "Philips Hue Starter Kit",
+      "price": 199.99,
+      "description": "Smart LED lighting system with app and voice control.",
+      "category": "Smart Home",
+      "image": "https://picsum.photos/seed/philipshue/800/800",
+      "inStock": true
+    }
+  ]
+}

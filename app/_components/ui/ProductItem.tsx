@@ -15,7 +15,7 @@ function ProductItem({ product }: { product: productType }) {
       <CardHeader className="p-0">
         <div className="relative w-full h-48">
           <Image
-            src={product.imageUrl}
+            src={product?.image}
             alt={product.title}
             fill
             className="object-cover rounded-t-2xl"
