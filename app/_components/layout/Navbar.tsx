@@ -17,7 +17,7 @@ function Navbar() {
 
   const pathName = usePathname();
   return (
-    <div className="w-full h-16 bg-primary flex items-center ps-10">
+    <div className="w-full h-16 bg-primary flex items-center justify-between ps-10 pe-10 text-white">
       <ul className="flex gap-10">
         {navLinks.map((navLink) => (
           <li
@@ -32,6 +32,10 @@ function Navbar() {
           </li>
         ))}
       </ul>
+
+      <div>
+        <Link href="/cart">Carts</Link>
+      </div>
     </div>
   );
 }

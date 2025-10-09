@@ -9,7 +9,7 @@ import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
 import { productType } from "@/types/projectTypes";
 
-function ProductItem({ product }: { product: productType }) {
+async function ProductItem({ product }: { product: productType }) {
   return (
     <Card className="w-full max-w-sm rounded-2xl shadow-md hover:shadow-lg transition">
       <CardHeader className="p-0">
