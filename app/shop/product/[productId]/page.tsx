@@ -8,6 +8,7 @@ import {
 } from "@/app/_components/ui/card";
 import Image from "next/image";
 import QuantityController from "@/app/_components/layout/QuantityController";
+import AddToCart from "@/app/_components/layout/AddToCart";
 
 interface PageProps {
   params: {
@@ -63,9 +64,7 @@ export default async function Page({ params }: PageProps) {
 
           <QuantityController />
 
-          <Button size="lg" className="mt-2">
-            Add to Cart
-          </Button>
+          <AddToCart product={product} />
         </CardFooter>
       </Card>
     </div>

@@ -13,9 +13,15 @@ type Actions = {
 export const useCart = create<States & Actions>((set) => ({
   carts: [],
   addToCart: (product: productType) =>
-    set((state: States) => ({ carts: [...state.carts, product] })),
+    set((state: States) => {
+      console.log(state);
+      return { carts: [...state.carts, product] };
+    }),
   removeFromCart: (productId: number) =>
-    set((state: States) => ({
-      carts: state.carts.filter((p: productType) => p.id !== productId),
-    })),
+    set((state: States) => {
+      console.log(state);
+      return {
+        carts: state.carts.filter((p: productType) => p.id !== productId),
+      };
+    }),
 }));
