@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -5,11 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
-import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
 import { productType } from "@/types/projectTypes";
+import AddToCart from "../layout/AddToCart";
 
-async function ProductItem({ product }: { product: productType }) {
+function ProductItem({ product }: { product: productType }) {
   return (
     <Card className="w-full max-w-sm rounded-2xl shadow-md hover:shadow-lg transition">
       <CardHeader className="p-0">
@@ -34,7 +36,7 @@ async function ProductItem({ product }: { product: productType }) {
 
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <span className="text-lg font-bold">${product.price}</span>
-        <Button>Add to cart</Button>
+        <AddToCart product={product} />
       </CardFooter>
     </Card>
   );

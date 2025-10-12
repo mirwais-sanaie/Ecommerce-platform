@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/lib/store";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,6 +17,7 @@ function Navbar() {
   ];
 
   const pathName = usePathname();
+  const { carts } = useCart();
   return (
     <div className="w-full h-16 bg-primary flex items-center justify-between ps-10 pe-10 text-white">
       <ul className="flex gap-10">
@@ -33,7 +35,14 @@ function Navbar() {
         ))}
       </ul>
 
-      <div>
+      <div className="relative">
+        {carts.length > 0 ? (
+          <span className="absolute -top-2.5 -right-1 w-5 h-5 bg-red-500 rounded-full text-center text-sm">
+            {carts.length}
+          </span>
+        ) : (
+          ""
+        )}
         <Link href="/cart">Carts</Link>
       </div>
     </div>
