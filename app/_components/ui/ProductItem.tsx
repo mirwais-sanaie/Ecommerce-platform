@@ -18,7 +18,7 @@ function ProductItem({ product }: { product: productType }) {
         <div className="relative w-full h-48">
           <Image
             src={product?.image}
-            alt={product.title}
+            alt={product?.title}
             fill
             className="object-cover rounded-t-2xl"
           />

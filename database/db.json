@@ -7,7 +7,8 @@
       "description": "Latest Apple iPhone with A17 Pro chip, 128GB storage, and titanium body.",
       "category": "Smartphones",
       "image": "https://picsum.photos/seed/iphone15/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 2,
@@ -16,7 +17,8 @@
       "description": "Flagship Samsung phone with Snapdragon 8 Gen 3 processor and 256GB storage.",
       "category": "Smartphones",
       "image": "https://picsum.photos/seed/galaxy25/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 3,
@@ -25,7 +27,8 @@
       "description": "13-inch Apple MacBook Air with M3 chip, 16GB RAM, 512GB SSD.",
       "category": "Laptops",
       "image": "https://picsum.photos/seed/macbookair/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 4,
@@ -34,7 +37,8 @@
       "description": "Industry-leading noise-cancelling headphones with 30-hour battery life.",
       "category": "Headphones",
       "image": "https://picsum.photos/seed/sonyheadphones/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 5,
@@ -43,7 +47,8 @@
       "description": "Sony next-gen console with ultra-fast SSD and 4K gaming support.",
       "category": "Gaming",
       "image": "https://picsum.photos/seed/ps5/800/800",
-      "inStock": false
+      "inStock": false,
+      "quantity": 1
     },
     {
       "id": 6,
@@ -52,7 +57,8 @@
       "description": "Microsoft’s most powerful console, supporting 4K gaming at 120fps.",
       "category": "Gaming",
       "image": "https://picsum.photos/seed/xbox/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 7,
@@ -61,7 +67,8 @@
       "description": "15-inch laptop with Intel i7, 32GB RAM, 1TB SSD and OLED display.",
       "category": "Laptops",
       "image": "https://picsum.photos/seed/dellxps/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 8,
@@ -70,7 +77,8 @@
       "description": "Premium smartwatch with titanium case and advanced health tracking.",
       "category": "Wearables",
       "image": "https://picsum.photos/seed/applewatch/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 9,
@@ -79,7 +87,8 @@
       "description": "Apple iPad Pro with M2 chip, Liquid Retina XDR display, and Apple Pencil support.",
       "category": "Tablets",
       "image": "https://picsum.photos/seed/ipad/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 10,
@@ -88,7 +97,8 @@
       "description": "Amazon’s popular e-reader with 6.8-inch display and adjustable warm light.",
       "category": "Tablets",
       "image": "https://picsum.photos/seed/kindle/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 11,
@@ -97,7 +107,8 @@
       "description": "Professional full-frame mirrorless camera with 24MP sensor and 4K video.",
       "category": "Cameras",
       "image": "https://picsum.photos/seed/canon/800/800",
-      "inStock": false
+      "inStock": false,
+      "quantity": 1
     },
     {
       "id": 12,
@@ -106,7 +117,8 @@
       "description": "High-resolution mirrorless camera with 45.7MP sensor and dual processors.",
       "category": "Cameras",
       "image": "https://picsum.photos/seed/nikonz7/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 13,
@@ -115,7 +127,8 @@
       "description": "Portable Bluetooth speaker with 360-degree sound and long battery life.",
       "category": "Speakers",
       "image": "https://picsum.photos/seed/bosespeaker/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 14,
@@ -124,7 +137,8 @@
       "description": "Waterproof portable speaker with powerful bass and rugged design.",
       "category": "Speakers",
       "image": "https://picsum.photos/seed/jblflip/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 15,
@@ -133,7 +147,8 @@
       "description": "Action camera with 5.3K video, HyperSmooth stabilization, and waterproof design.",
       "category": "Cameras",
       "image": "https://picsum.photos/seed/gopro/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 16,
@@ -142,7 +157,8 @@
       "description": "Advanced wireless mouse with ergonomic design and customizable buttons.",
       "category": "Accessories",
       "image": "https://picsum.photos/seed/mxmaster/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 17,
@@ -151,7 +167,8 @@
       "description": "Mechanical gaming keyboard with RGB lighting and tactile switches.",
       "category": "Accessories",
       "image": "https://picsum.photos/seed/razerkeyboard/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 18,
@@ -160,7 +177,8 @@
       "description": "High-performance cordless vacuum cleaner with laser dust detection.",
       "category": "Home Appliances",
       "image": "https://picsum.photos/seed/dyson/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 19,
@@ -169,7 +187,8 @@
       "description": "Multi-use electric pressure cooker with 7 cooking modes.",
       "category": "Home Appliances",
       "image": "https://picsum.photos/seed/instantpot/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     },
     {
       "id": 20,
@@ -178,7 +197,8 @@
       "description": "Smart LED lighting system with app and voice control.",
       "category": "Smart Home",
       "image": "https://picsum.photos/seed/philipshue/800/800",
-      "inStock": true
+      "inStock": true,
+      "quantity": 1
     }
   ]
 }

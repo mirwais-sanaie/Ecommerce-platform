@@ -36,13 +36,13 @@ function Navbar() {
       </ul>
 
       <div className="relative">
-        {carts.length > 0 ? (
+        {/* {carts.length > 0 ? (
           <span className="absolute -top-2.5 -right-1 w-5 h-5 bg-red-500 rounded-full text-center text-sm">
             {carts.length}
           </span>
         ) : (
           ""
-        )}
+        )} */}
         <Link href="/cart">Carts</Link>
       </div>
     </div>
