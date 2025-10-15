@@ -1,31 +1,36 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/app/_components/ui/button";
+import { useCart } from "@/lib/store";
 
-export default function QuantityController() {
-  const [quantity, setQuantity] = useState(1);
-
-  const decrease = () => setQuantity((q) => Math.max(1, q - 1));
-  const increase = () => setQuantity((q) => q + 1);
-
+export default function QuantityController({
+  productId,
+}: {
+  productId: number;
+}) {
+  console.log(productId);
+  const { carts, increaseQuantity, decreaseQuantity } = useCart();
+  const product = carts.find((item) => item.id === productId);
+  if (!product) return null;
   return (
     <div className="flex items-center gap-4">
       <Button
         variant="outline"
         size="icon"
-        onClick={decrease}
+        onClick={() => decreaseQuantity(product.id)}
         className="rounded-full"
       >
         –
       </Button>
 
-      <span className="text-xl font-semibold w-6 text-center">{quantity}</span>
+      <span className="text-xl font-semibold w-6 text-center">
+        {product.quantity}
+      </span>
 
       <Button
         variant="outline"
         size="icon"
-        onClick={increase}
+        onClick={() => increaseQuantity(product.id)}
         className="rounded-full"
       >
         +

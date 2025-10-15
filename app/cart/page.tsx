@@ -7,8 +7,13 @@ import { Button } from "@/app/_components/ui/button";
 import { Trash2, Plus, Minus } from "lucide-react";
 
 export default function CartPage() {
-  const { carts, removeFromCart, increaseQuantity, decreaseQuantity } =
-    useCart();
+  const {
+    carts,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    totalQuantity,
+  } = useCart();
   const totalPrice = carts.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -61,7 +66,7 @@ export default function CartPage() {
                   <Minus size={16} />
                 </Button>
                 <span className="w-6 text-center font-medium">
-                  {item.quantity || 1}
+                  {item.quantity}
                 </span>
                 <Button
                   variant="outline"

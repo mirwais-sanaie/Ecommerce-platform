@@ -62,7 +62,7 @@ export default async function Page({ params }: PageProps) {
         <CardFooter className="flex flex-col items-start gap-3">
           <span className="text-3xl font-bold">${product.price}</span>
 
-          <QuantityController />
+          <QuantityController productId={product.id} />
 
           <AddToCart product={product} />
         </CardFooter>

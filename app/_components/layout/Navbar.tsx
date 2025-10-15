@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 function Navbar() {
-  const { carts } = useCart();
+  const { totalQuantity } = useCart();
   const pathName = usePathname();
 
   const navLinks = [
@@ -29,9 +29,9 @@ function Navbar() {
       </ul>
 
       <div className="relative">
-        {carts.length > 0 && (
+        {totalQuantity > 0 && (
           <span className="absolute -top-2 -right-1 w-5 h-5 bg-red-500 rounded-full text-center text-sm">
-            {carts.length}
+            {totalQuantity}
           </span>
         )}
         <Link href="/cart">Cart</Link>
