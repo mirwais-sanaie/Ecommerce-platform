@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/app/_components/ui/button";
 import { Trash2, Plus, Minus } from "lucide-react";
+import { formatPrice } from "@/utils/helper";
 
 export default function CartPage() {
   const {
@@ -99,7 +100,7 @@ export default function CartPage() {
 
           <div className="flex justify-between mb-2">
             <p>Subtotal</p>
-            <p>${totalPrice.toFixed(2)}</p>
+            <p>{formatPrice(totalPrice)}</p>
           </div>
 
           <div className="flex justify-between mb-2">
@@ -111,7 +112,7 @@ export default function CartPage() {
 
           <div className="flex justify-between text-xl font-bold mb-6">
             <p>Total</p>
-            <p>${totalPrice.toFixed(2)}</p>
+            <p>{formatPrice(totalPrice)}</p>
           </div>
 
           <div className="flex flex-col gap-3">

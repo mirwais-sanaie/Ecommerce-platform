@@ -6,7 +6,6 @@ const page = async () => {
 
   return (
     <div className="m-10">
-      <h1>Shop page</h1>
       <ProductList products={products} />
     </div>
   );
