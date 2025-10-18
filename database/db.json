@@ -199,6 +199,206 @@
       "image": "https://picsum.photos/seed/philipshue/800/800",
       "inStock": true,
       "quantity": 1
+    },
+    {
+      "id": 21,
+      "title": "Google Pixel 9 Pro",
+      "price": 999.99,
+      "description": "Google’s latest smartphone with Tensor G3 chip and stunning camera performance.",
+      "category": "Smartphones",
+      "image": "https://picsum.photos/seed/pixel9/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 22,
+      "title": "Asus ROG Zephyrus G16",
+      "price": 1899.99,
+      "description": "Gaming laptop with RTX 4080 GPU and high-refresh QHD display.",
+      "category": "Laptops",
+      "image": "https://picsum.photos/seed/zephyrus/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 23,
+      "title": "Lenovo ThinkPad X1 Carbon",
+      "price": 1699.99,
+      "description": "Lightweight business laptop with Intel i7 and long battery life.",
+      "category": "Laptops",
+      "image": "https://picsum.photos/seed/thinkpadx1/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 24,
+      "title": "Beats Studio Pro",
+      "price": 349.99,
+      "description": "High-quality wireless headphones with immersive sound and ANC.",
+      "category": "Headphones",
+      "image": "https://picsum.photos/seed/beats/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 25,
+      "title": "Meta Quest 3",
+      "price": 499.99,
+      "description": "Next-gen VR headset for immersive gaming and mixed reality experiences.",
+      "category": "Gaming",
+      "image": "https://picsum.photos/seed/metaquest/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 26,
+      "title": "Amazon Echo Show 10",
+      "price": 249.99,
+      "description": "Smart display with Alexa and auto-rotating 10-inch screen.",
+      "category": "Smart Home",
+      "image": "https://picsum.photos/seed/echoshow/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 27,
+      "title": "DJI Mini 4 Pro",
+      "price": 999.99,
+      "description": "Compact drone with 4K HDR camera and advanced obstacle sensing.",
+      "category": "Cameras",
+      "image": "https://picsum.photos/seed/djimini/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 28,
+      "title": "Garmin Fenix 7",
+      "price": 899.99,
+      "description": "Multisport smartwatch with GPS, heart rate, and solar charging.",
+      "category": "Wearables",
+      "image": "https://picsum.photos/seed/garmin/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 29,
+      "title": "HP Envy x360",
+      "price": 1199.99,
+      "description": "2-in-1 touchscreen laptop with AMD Ryzen 7 and 16GB RAM.",
+      "category": "Laptops",
+      "image": "https://picsum.photos/seed/hpenvy/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 30,
+      "title": "Anker Soundcore Motion+",
+      "price": 99.99,
+      "description": "Portable Bluetooth speaker with Hi-Res audio and deep bass.",
+      "category": "Speakers",
+      "image": "https://picsum.photos/seed/soundcore/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 31,
+      "title": "Ring Video Doorbell Pro 2",
+      "price": 249.99,
+      "description": "Smart video doorbell with 3D motion detection and night vision.",
+      "category": "Smart Home",
+      "image": "https://picsum.photos/seed/ringdoorbell/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 32,
+      "title": "Samsung Odyssey G9",
+      "price": 1499.99,
+      "description": "49-inch curved gaming monitor with 240Hz refresh rate and QLED display.",
+      "category": "Accessories",
+      "image": "https://picsum.photos/seed/odysseyg9/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 33,
+      "title": "Apple HomePod 2",
+      "price": 299.99,
+      "description": "Smart speaker with high-fidelity sound and Siri voice assistant.",
+      "category": "Speakers",
+      "image": "https://picsum.photos/seed/homepod2/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 34,
+      "title": "Roku Ultra 2025",
+      "price": 129.99,
+      "description": "4K streaming device with Dolby Vision and voice remote control.",
+      "category": "Smart Home",
+      "image": "https://picsum.photos/seed/rokuultra/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 35,
+      "title": "OnePlus 13",
+      "price": 899.99,
+      "description": "Flagship smartphone with OxygenOS, Snapdragon 8 Gen 3, and 120Hz AMOLED display.",
+      "category": "Smartphones",
+      "image": "https://picsum.photos/seed/oneplus13/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 36,
+      "title": "LG C4 OLED TV",
+      "price": 2499.99,
+      "description": "65-inch OLED TV with 4K resolution, HDR10, and smart webOS interface.",
+      "category": "Home Appliances",
+      "image": "https://picsum.photos/seed/lgc4/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 37,
+      "title": "Eufy RoboVac X10",
+      "price": 499.99,
+      "description": "Smart robot vacuum with laser navigation and self-emptying base.",
+      "category": "Home Appliances",
+      "image": "https://picsum.photos/seed/eufy/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 38,
+      "title": "Corsair Virtuoso XT",
+      "price": 279.99,
+      "description": "Premium wireless gaming headset with surround sound and long battery life.",
+      "category": "Headphones",
+      "image": "https://picsum.photos/seed/corsairxt/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 39,
+      "title": "BenQ PD3220U",
+      "price": 999.99,
+      "description": "32-inch 4K designer monitor with Thunderbolt 3 and 100% sRGB color accuracy.",
+      "category": "Accessories",
+      "image": "https://picsum.photos/seed/benqpd/800/800",
+      "inStock": true,
+      "quantity": 1
+    },
+    {
+      "id": 40,
+      "title": "Fitbit Charge 7",
+      "price": 179.99,
+      "description": "Advanced fitness tracker with SpO2 sensor, GPS, and heart rate monitor.",
+      "category": "Wearables",
+      "image": "https://picsum.photos/seed/fitbitcharge7/800/800",
+      "inStock": true,
+      "quantity": 1
     }
   ]
 }
