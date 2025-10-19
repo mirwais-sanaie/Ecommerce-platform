@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationProps {
   page: number;
@@ -8,16 +8,20 @@ interface PaginationProps {
   pageCount: number;
 }
 
-function Pagination({ page, setPage, pageCount }: PaginationProps) {
+function Pagination({ page, pageCount }: PaginationProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Create array of page numbers
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   // Navigate when page changes
   function goToPage(p: number) {
-    setPage(p);
-    router.push(`/shop?_page=${p}&_per_page=5`);
+    const currentSearchParams = new URLSearchParams(searchParams.toString());
+    currentSearchParams.set("_page", p.toString());
+    currentSearchParams.set("_per_page", "10");
+
+    router.push(`/shop?${currentSearchParams.toString()}`);
   }
 
   return (
