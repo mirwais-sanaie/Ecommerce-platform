@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { addProduct } from "@/lib/data";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title is required"),
@@ -42,17 +43,45 @@ export default function DashboardPage() {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
-    // Simulate upload or API request
-    setTimeout(() => {
-      console.log("Submitted Data:", data);
-      setLoading(false);
-      reset();
-      toast?.success("Product submitted successfully.");
-    }, 1500);
-  };
 
+    try {
+      const file = data.image?.[0];
+      let imageBase64 = "";
+
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        await new Promise((resolve) => {
+          reader.onload = () => {
+            imageBase64 = reader.result as string;
+            resolve(true);
+          };
+        });
+      }
+
+      const productData = {
+        title: data.title,
+        price: parseFloat(data.price),
+        description: data.description,
+        category: data.category,
+        image: imageBase64, // or upload URL later
+        id: Date.now(),
+        quantity: 1,
+      };
+
+      await addProduct(productData);
+
+      toast.success("Product Added Successfully!");
+
+      reset();
+    } catch (error) {
+      toast.error("Failed to add product. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
       <Card className="w-full max-w-lg shadow-lg border rounded-2xl">

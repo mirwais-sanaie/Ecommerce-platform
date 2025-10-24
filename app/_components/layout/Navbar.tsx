@@ -11,6 +11,7 @@ function Navbar() {
   const navLinks = [
     { name: "Home", link: "/" },
     { name: "Shop", link: "/shop" },
+    { name: "Dashboard", link: "/dashboard" },
   ];
 
   return (
