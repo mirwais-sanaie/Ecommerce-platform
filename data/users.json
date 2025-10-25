@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "id": "1761417020173",
+      "email": "mirwais.sanaie@gmail.com",
+      "password": "$2b$12$Qop1Jlc60IqwUmiERPAnnuIkodu8SaToNmVZjJRmBSR6GXvSFk.KK",
+      "role": "user",
+      "createdAt": "2025-10-25T18:30:20.173Z"
+    }
+  ]
+}
