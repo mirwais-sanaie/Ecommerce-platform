@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Protected routes that require authentication
-  const protectedRoutes = ["/cart"];
+  const protectedRoutes = ["/carts"];
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
   );
@@ -51,5 +51,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/cart/:path*", "/login", "/signup"],
+  matcher: ["/cart", "/cart/:path*", "/login", "/signup"],
 };

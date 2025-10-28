@@ -31,7 +31,7 @@ function Navbar() {
       ];
 
   return (
-    <div className="w-full h-16 bg-primary flex items-center justify-between px-10 text-white">
+    <div className="fixed top-0 left-0 right-0 z-30 w-full h-16 bg-primary flex items-center justify-between px-10 text-white">
       <ul className="flex gap-10">
         {navLinks.map((navLink) => (
           <li
