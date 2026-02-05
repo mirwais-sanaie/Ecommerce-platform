@@ -1,9 +1,22 @@
 import { NavLink, Link } from "react-router-dom";
 import { assets } from "./../assets/frontend_assets/assets.js";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [profileMenu, setProfileMenu] = useState(false);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileMenu(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
@@ -41,14 +54,20 @@ function Navbar() {
           className="w-5 cursor-pointer"
         />
 
-        <div className="group relative">
+        <div ref={profileRef} className="relative group">
           <img
             className="w-5 cursor-pointer"
             src={assets.profile_icon}
-            alt=""
+            alt="profile"
+            onClick={() => setProfileMenu((prev) => !prev)}
           />
-          <div className="group-hover:block hidden absolute right-0 pt-4">
-            <div className="flex flex-col rounded gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500">
+
+          <div
+            className={`
+               absolute right-0 pt-4
+              ${profileMenu ? "block" : "hidden"} sm:group-hover:block`}
+          >
+            <div className="flex flex-col rounded gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 shadow-lg">
               <p className="cursor-pointer hover:text-black">My Profile</p>
               <p className="cursor-pointer hover:text-black">Orders</p>
               <p className="cursor-pointer hover:text-black">Logout</p>
