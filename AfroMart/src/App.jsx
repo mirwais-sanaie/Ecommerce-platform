@@ -8,15 +8,18 @@ import Login from "./pages/Login";
 import Orders from "./pages/Orders";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] xl:px-[9vw] ">
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-        <Route path="/collection" element={<Collection />} />
+        <Route path="/collections" element={<Collection />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
