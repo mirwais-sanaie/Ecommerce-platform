@@ -1,11 +1,14 @@
 import { NavLink, Link } from "react-router-dom";
 import { assets } from "./../assets/frontend_assets/assets.js";
 import { useState, useRef, useEffect } from "react";
+import { useShopContext } from "../contexts/ShopContext.jsx";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [profileMenu, setProfileMenu] = useState(false);
   const profileRef = useRef(null);
+
+  const { setShowSearch } = useShopContext();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -52,6 +55,7 @@ function Navbar() {
           src={assets.search_icon}
           alt="search icon"
           className="w-5 cursor-pointer"
+          onClick={() => setShowSearch((prev) => !prev)}
         />
 
         <div ref={profileRef} className="relative group">
