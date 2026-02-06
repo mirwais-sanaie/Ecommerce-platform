@@ -4,7 +4,6 @@ import { useShopContext } from "../contexts/ShopContext";
 
 const BestSeller = () => {
   const { products } = useShopContext();
-  //   const [selectedItem, setSelectedItem] = useState(null);
 
   const bestSeller = products
     ? products.filter((item) => item.bestseller).slice(0, 5)
