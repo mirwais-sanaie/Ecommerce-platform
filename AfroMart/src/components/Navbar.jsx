@@ -8,7 +8,7 @@ function Navbar() {
   const [profileMenu, setProfileMenu] = useState(false);
   const profileRef = useRef(null);
 
-  const { setShowSearch } = useShopContext();
+  const { setShowSearch, getCartTotalCount } = useShopContext();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -81,9 +81,11 @@ function Navbar() {
 
         <Link to="/cart" className="relative">
           <img className="w-5 min-w-5" src={assets.cart_icon} alt="" />
-          <p className="absolute -right-1.5 -bottom-1.5 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
-            20
-          </p>
+          {getCartTotalCount() > 0 && (
+            <p className="absolute -right-1.5 -bottom-1.5 min-w-4 h-4 px-1 flex items-center justify-center bg-black text-white rounded-full text-[8px]">
+              {getCartTotalCount() > 99 ? "99+" : getCartTotalCount()}
+            </p>
+          )}
         </Link>
 
         <img
