@@ -15,6 +15,10 @@ const Product = () => {
   /* ---------------- FETCH PRODUCT ---------------- */
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [productId]);
+
+  useEffect(() => {
     if (!products.length) return;
 
     const foundProduct = products.find((item) => item._id === productId);
