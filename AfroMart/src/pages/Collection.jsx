@@ -15,14 +15,14 @@ const Collection = () => {
   const toggleCategory = (e) => {
     const value = e.target.value;
     setCategory((prev) =>
-      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value],
+      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value]
     );
   };
 
   const toggleSubCategory = (e) => {
     const value = e.target.value;
     setSubCategory((prev) =>
-      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value],
+      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value]
     );
   };
 
@@ -33,7 +33,7 @@ const Collection = () => {
       const searchText = search.toLowerCase();
 
       productsCpy = productsCpy.filter((p) =>
-        p.name.toLowerCase().includes(searchText),
+        p.name.toLowerCase().includes(searchText)
       );
     }
 
@@ -43,7 +43,7 @@ const Collection = () => {
 
     if (subCategory.length > 0) {
       productsCpy = productsCpy.filter((p) =>
-        subCategory.includes(p.subCategory),
+        subCategory.includes(p.subCategory)
       );
     }
 
@@ -86,9 +86,9 @@ const Collection = () => {
 
         {/* CATEGORY */}
         <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 hidden sm:block ${
-            showFilter ? "block" : ""
-          }`}
+          className={`border border-gray-300 pl-5 py-3 mt-6 ${
+            showFilter ? "block" : "hidden"
+          } sm:block`}
         >
           <p className="mb-3 text-sm font-medium">CATEGORIES</p>
           <div className="flex flex-col gap-2 text-sm text-gray-700">
@@ -108,9 +108,9 @@ const Collection = () => {
 
         {/* SUB CATEGORY */}
         <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 hidden sm:block ${
-            showFilter ? "block" : ""
-          }`}
+          className={`border border-gray-300 pl-5 py-3 mt-6 ${
+            showFilter ? "block" : "hidden"
+          } sm:block`}
         >
           <p className="mb-3 text-sm font-medium">TYPE</p>
           <div className="flex flex-col gap-2 text-sm text-gray-700">

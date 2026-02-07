@@ -8,7 +8,7 @@ function Navbar() {
   const [profileMenu, setProfileMenu] = useState(false);
   const profileRef = useRef(null);
 
-  const { setShowSearch, getCartTotalCount } = useShopContext();
+  const { setShowSearch, getCartTotalCount, user, logout } = useShopContext();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -58,26 +58,52 @@ function Navbar() {
           onClick={() => setShowSearch((prev) => !prev)}
         />
 
-        <div ref={profileRef} className="relative group">
-          <img
-            className="w-5 cursor-pointer"
-            src={assets.profile_icon}
-            alt="profile"
-            onClick={() => setProfileMenu((prev) => !prev)}
-          />
-
-          <div
-            className={`
-               absolute right-0 pt-4
-              ${profileMenu ? "block" : "hidden"} sm:group-hover:block`}
-          >
-            <div className="flex flex-col rounded gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 shadow-lg">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
+        {user ? (
+          <div ref={profileRef} className="relative group">
+            <img
+              className="w-5 cursor-pointer"
+              src={assets.profile_icon}
+              alt="profile"
+              onClick={() => setProfileMenu((prev) => !prev)}
+            />
+            <div
+              className={`
+                 absolute right-0 pt-4
+                ${profileMenu ? "block" : "hidden"} sm:group-hover:block`}
+            >
+              <div className="flex flex-col rounded gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 shadow-lg">
+                <Link
+                  to="/"
+                  className="hover:text-black"
+                  onClick={() => setProfileMenu(false)}
+                >
+                  My Profile
+                </Link>
+                <Link
+                  to="/orders"
+                  className="hover:text-black"
+                  onClick={() => setProfileMenu(false)}
+                >
+                  Orders
+                </Link>
+                <Link
+                  to="/"
+                  className="hover:text-black"
+                  onClick={() => {
+                    setProfileMenu(false);
+                    logout();
+                  }}
+                >
+                  Logout
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <Link to="/login" className="text-sm text-gray-700 hover:text-black">
+            Login
+          </Link>
+        )}
 
         <Link to="/cart" className="relative">
           <img className="w-5 min-w-5" src={assets.cart_icon} alt="" />
@@ -144,6 +170,15 @@ function Navbar() {
           >
             Contact
           </NavLink>
+          {!user && (
+            <Link
+              onClick={() => setOpen(false)}
+              className="py-2 pl-6 border"
+              to="/login"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>

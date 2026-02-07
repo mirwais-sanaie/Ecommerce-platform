@@ -3,20 +3,39 @@ import { Link, useNavigate } from "react-router-dom";
 import { useShopContext } from "../contexts/ShopContext";
 import Title from "../components/Title";
 
-function Login() {
+function Signup() {
   const navigate = useNavigate();
-  const { login } = useShopContext();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { signup } = useShopContext();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
-    const result = login(email, password);
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+    const result = signup(formData.name, formData.email, formData.password);
     setLoading(false);
 
     if (result.success) {
@@ -29,9 +48,9 @@ function Login() {
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center py-10 border-t">
       <div className="w-full max-w-md text-center">
-        <Title text1="WELCOME" text2="BACK" />
+        <Title text1="CREATE" text2="ACCOUNT" />
         <h1 className="text-2xl sm:text-3xl font-medium mb-8 prata-regular">
-          Login to your account
+          Sign up for AfroMart
         </h1>
       </div>
 
@@ -43,11 +62,26 @@ function Login() {
             </div>
           )}
           <div>
+            <label className="block text-sm text-gray-600 mb-1">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 px-4 py-2 text-sm"
+              placeholder="John Doe"
+            />
+          </div>
+          <div>
             <label className="block text-sm text-gray-600 mb-1">Email *</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               required
               className="w-full border border-gray-300 px-4 py-2 text-sm"
               placeholder="you@example.com"
@@ -59,8 +93,24 @@ function Login() {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength={6}
+              className="w-full border border-gray-300 px-4 py-2 text-sm"
+              placeholder="At least 6 characters"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">
+              Confirm Password *
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               required
               className="w-full border border-gray-300 px-4 py-2 text-sm"
               placeholder="••••••••"
@@ -71,14 +121,14 @@ function Login() {
             disabled={loading}
             className="w-full bg-black text-white py-3 text-sm hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {loading ? "Signing in..." : "LOGIN"}
+            {loading ? "Creating account..." : "SIGN UP"}
           </button>
         </form>
 
         <p className="mt-6 text-sm text-gray-500 text-center">
-          Don&apos;t have an account?{" "}
-          <Link to="/signup" className="text-black font-medium hover:underline">
-            Sign up
+          Already have an account?{" "}
+          <Link to="/login" className="text-black font-medium hover:underline">
+            Login
           </Link>
         </p>
       </div>
@@ -86,4 +136,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

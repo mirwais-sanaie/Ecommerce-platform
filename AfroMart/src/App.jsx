@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Collection from "./pages/Collection";
 import PlaceOrder from "./pages/PlaceOrder";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Orders from "./pages/Orders";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
@@ -26,6 +27,7 @@ function App() {
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/product/:productId" element={<Product />} />
       </Routes>
