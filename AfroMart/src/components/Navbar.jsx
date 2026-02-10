@@ -25,7 +25,7 @@ function Navbar() {
     <div className="flex items-center justify-between py-5 font-medium">
       {/* logo */}
       <Link to="/">
-        <img src={assets.logo2} width={50} height={50} alt="logo" />
+        <img src={assets.logo2} width={140} height={140} alt="logo" />
       </Link>
 
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
