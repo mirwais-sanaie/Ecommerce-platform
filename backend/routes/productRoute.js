@@ -8,16 +8,20 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
+const { restrictTo } = require("../controllers/authController");
 
 const router = express.Router();
 
 // Support both single image (upload.single) and multiple images (upload.array)
-router.route("/").post(upload.single("image"), createProduct).get(getAllProducts);
+router
+  .route("/")
+  .post(upload.array("image", 5), createProduct)
+  .get(getAllProducts);
 
 router
   .route("/:id")
   .get(getProduct)
-  .patch(upload.single("image"), updateProduct)
-  .delete(deleteProduct);
+  .patch(upload.single("image"), restrictTo("admin"), updateProduct)
+  .delete(restrictTo("admin"), deleteProduct);
 
 module.exports = router;

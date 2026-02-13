@@ -19,31 +19,17 @@ const uploadImageToCloudinary = (buffer) => {
 };
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-  // Check if at least one image is provided
-  if (
-    !req.file &&
-    (!req.files || !req.files.image || req.files.image.length === 0)
-  ) {
+  // With upload.array(), files are in req.files
+  if (!req.files || req.files.length === 0) {
     return next(new AppError("At least one image is required", 400));
   }
 
-  let imageUrls = [];
+  // Upload all images to Cloudinary
+  const imageUrls = await Promise.all(
+    req.files.map((file) => uploadImageToCloudinary(file.buffer)),
+  );
 
-  // Handle single image upload (req.file from upload.single)
-  if (req.file) {
-    const imageUrl = await uploadImageToCloudinary(req.file.buffer);
-    imageUrls.push(imageUrl);
-  }
-
-  // Handle multiple image uploads (req.files.image from upload.array)
-  if (req.files && req.files.image && Array.isArray(req.files.image)) {
-    const uploadedUrls = await Promise.all(
-      req.files.image.map((file) => uploadImageToCloudinary(file.buffer)),
-    );
-    imageUrls.push(...uploadedUrls);
-  }
-
-  // Parse sizes if it's a string (from form data)
+  // Parse sizes
   let sizesArray = req.body.sizes;
   if (typeof sizesArray === "string") {
     try {
@@ -53,7 +39,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     }
   }
 
-  // Parse bestseller if it's a string
+  // Parse bestseller
   let bestsellerValue = req.body.bestseller;
   if (typeof bestsellerValue === "string") {
     bestsellerValue = bestsellerValue === "true" || bestsellerValue === "1";
