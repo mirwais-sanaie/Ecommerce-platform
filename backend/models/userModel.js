@@ -1,22 +1,34 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const validator = require("validator");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    require: [true, "please tell us your name"],
   },
   email: {
     type: String,
-    required: true,
+    require: [true, "please provide your email"],
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, "please provide a valid email"],
   },
   password: {
     type: String,
-    required: true,
+    require: [true, "please provide a password"],
+    minlength: 8,
+    select: false,
   },
   confirmPassword: {
     type: String,
-    required: true,
+    require: [true, "please confirm your password"],
+    validate: {
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: "passwords are not the same!",
+    },
   },
 });
 
@@ -29,7 +41,7 @@ userSchema.pre("save", async function () {
   // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
-  this.passwordConfirm = undefined;
+  this.confirmPassword = undefined;
 });
 
 userSchema.methods.correctPassword = async function (

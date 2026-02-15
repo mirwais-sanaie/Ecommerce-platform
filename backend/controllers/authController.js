@@ -14,14 +14,27 @@ const signToken = (id) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  // 1) Check if the email already exists
+  const existingUser = await User.findOne({ email: req.body.email });
+
+  if (existingUser) {
+    return next(
+      new AppError("Email already exists. Please use a different one.", 400),
+    );
+  }
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
+    confirmPassword: req.body.confirmPassword,
     photo: req.body.photo,
     role: req.body.role,
   });
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new AppError("Passwords do not match", 400));
+  }
 
   const token = signToken(newUser._id);
 
