@@ -8,7 +8,7 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
-const { restrictTo } = require("../controllers/authController");
+const { protect, restrictTo } = require("../controllers/authController");
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router
 router
   .route("/:id")
   .get(getProduct)
-  .patch(upload.single("image"), restrictTo("admin"), updateProduct)
-  .delete(restrictTo("admin"), deleteProduct);
+  .patch(upload.single("image"), protect, restrictTo("admin"), updateProduct)
+  .delete(protect, restrictTo("admin"), deleteProduct);
 
 module.exports = router;
