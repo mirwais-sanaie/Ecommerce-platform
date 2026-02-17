@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/sidebar";
-import List from "./pages/list";
-import Orders from "./pages/orders";
+import Sidebar from "./components/Sidebar";
+import List from "./pages/List";
+import Orders from "./pages/Orders";
 import Add from "./pages/Add";
 import { useState } from "react";
 import Login from "./components/Login";

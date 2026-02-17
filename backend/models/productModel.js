@@ -11,11 +11,11 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
+    default: "",
   },
   subCategory: {
     type: String,
-    required: true,
+    default: "",
   },
   price: {
     type: Number,

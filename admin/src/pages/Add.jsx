@@ -2,7 +2,15 @@ import { useState } from "react";
 import { assets } from "../assets/admin_assets/assets";
 
 const Add = () => {
-  // State to hold the image previews and names
+  // Store actual files
+  const [imageFiles, setImageFiles] = useState({
+    image1: null,
+    image2: null,
+    image3: null,
+    image4: null,
+  });
+
+  // Store previews
   const [imagePreviews, setImagePreviews] = useState({
     image1: null,
     image2: null,
@@ -17,37 +25,111 @@ const Add = () => {
     image4: "",
   });
 
-  // Handle image selection and preview
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productCategory, setProductCategory] = useState("Men");
+  const [productSubCategory, setProductSubCategory] = useState("Topwear");
+  const [productPrice, setProductPrice] = useState("");
+  const [productSizes, setProductSizes] = useState([]);
+  const [isBestSeller, setIsBestSeller] = useState(false);
+
+  // Handle image selection
   const handleImageChange = (event, imageKey) => {
     const file = event.target.files[0];
-    if (file) {
-      // Update the preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreviews((prevState) => ({
-          ...prevState,
-          [imageKey]: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
 
-      // Get the file name without extension and truncate if necessary
-      const fileNameWithoutExtension = file.name.split(".")[0];
-      const truncatedFileName =
-        fileNameWithoutExtension.length > 12
-          ? fileNameWithoutExtension.substring(0, 12) + "..."
-          : fileNameWithoutExtension;
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File size should not exceed 5MB");
+      return;
+    }
 
-      // Set the truncated or full file name
-      setImageNames((prevState) => ({
-        ...prevState,
-        [imageKey]: truncatedFileName,
+    // Store actual file
+    setImageFiles((prev) => ({
+      ...prev,
+      [imageKey]: file,
+    }));
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreviews((prev) => ({
+        ...prev,
+        [imageKey]: reader.result,
       }));
+    };
+    reader.readAsDataURL(file);
+
+    // Store truncated name
+    const fileNameWithoutExtension = file.name.split(".")[0];
+    const truncatedFileName =
+      fileNameWithoutExtension.length > 12
+        ? fileNameWithoutExtension.substring(0, 12) + "..."
+        : fileNameWithoutExtension;
+
+    setImageNames((prev) => ({
+      ...prev,
+      [imageKey]: truncatedFileName,
+    }));
+  };
+
+  const handleSizeSelection = (size) => {
+    setProductSizes((prevSizes) =>
+      prevSizes.includes(size)
+        ? prevSizes.filter((item) => item !== size)
+        : [...prevSizes, size],
+    );
+  };
+
+  //submit form data
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("name", productName);
+    formData.append("description", productDescription);
+    formData.append("category", productCategory);
+    formData.append("subCategory", productSubCategory);
+    formData.append("price", Number(productPrice));
+    formData.append("isBestSeller", isBestSeller);
+    formData.append("sizes", JSON.stringify(productSizes));
+
+    // Append images (important: field name must match backend)
+    Object.values(imageFiles).forEach((file) => {
+      if (file) {
+        formData.append("image", file);
+      }
+    });
+
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_URL + "/api/v1/products",
+        {
+          method: "POST",
+          body: formData, // 🚀 No JSON, no headers
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to add product");
+      }
+
+      console.log("Product added:", data);
+      alert("Product added successfully!");
+    } catch (error) {
+      console.error("Error adding product:", error);
+      alert(error.message);
     }
   };
 
   return (
-    <form className="flex flex-col gap-4 p-6 max-w-2xl mx-auto">
+    <form
+      className="flex flex-col gap-4 p-6 max-w-2xl mx-auto"
+      onSubmit={handleSubmit}
+    >
+      {/* Image upload section */}
       <div>
         <p className="text-lg font-medium mb-2">Upload Images</p>
         <div className="flex flex-wrap gap-3">
@@ -62,6 +144,7 @@ const Add = () => {
                 type="file"
                 id={imageKey}
                 hidden
+                accept="image/*"
                 onChange={(e) => handleImageChange(e, imageKey)}
               />
               <p className="mt-2 text-sm text-center">
@@ -72,88 +155,96 @@ const Add = () => {
         </div>
       </div>
 
-      <div className="w-full">
+      {/* Product name */}
+      <div>
         <p className="mb-2">Product name</p>
         <input
-          className="w-full max-w-125 px-3 py-2 border border-gray-300 rounded-md outline-none focus:border-gray-400"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
           type="text"
-          placeholder="Type here"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          required
         />
       </div>
 
-      <div className="w-full mt-4">
+      {/* Description */}
+      <div>
         <p className="mb-2">Product description</p>
         <textarea
-          className="w-full max-w-125 px-3 py-2 border border-gray-300 rounded-md outline-none focus:border-gray-400"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
           rows="4"
-          placeholder="Write here"
+          value={productDescription}
+          onChange={(e) => setProductDescription(e.target.value)}
+          required
         />
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
-        <div className="w-full sm:w-auto">
-          <p className="mb-2">Product category</p>
-          <select className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:border-gray-400">
-            <option value="Men">Men</option>
-            <option value="Women">Women</option>
-            <option value="Kids">Kids</option>
-          </select>
-        </div>
-        <div className="w-full sm:w-auto">
-          <p className="mb-2">Sub category</p>
-          <select className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:border-gray-400">
-            <option value="Topwear">Topwear</option>
-            <option value="Bottomwear">Bottomwear</option>
-            <option value="Winterwear">Winterwear</option>
-          </select>
-        </div>
-        <div>
-          <p className="mb-2">Product Price</p>
-          <input
-            className="w-full px-3 py-2 sm:w-30 border border-gray-300 rounded-md outline-none focus:border-gray-400"
-            type="number"
-            placeholder="25"
-            min="0"
-            step="1"
-          />
-        </div>
+      {/* Category, subcategory, price */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <select
+          value={productCategory}
+          onChange={(e) => setProductCategory(e.target.value)}
+          className="px-3 py-2 border border-gray-300 rounded-md"
+        >
+          <option value="Men">Men</option>
+          <option value="Women">Women</option>
+          <option value="Kids">Kids</option>
+        </select>
+
+        <select
+          value={productSubCategory}
+          onChange={(e) => setProductSubCategory(e.target.value)}
+          className="px-3 py-2 border border-gray-300 rounded-md"
+        >
+          <option value="Topwear">Topwear</option>
+          <option value="Bottomwear">Bottomwear</option>
+          <option value="Winterwear">Winterwear</option>
+        </select>
+
+        <input
+          type="number"
+          min="0"
+          value={productPrice}
+          onChange={(e) => setProductPrice(e.target.value)}
+          placeholder="Price"
+          className="px-3 py-2 border border-gray-300 rounded-md"
+          required
+        />
       </div>
 
+      {/* Sizes */}
       <div>
         <p className="mb-2">Product Sizes</p>
         <div className="flex gap-3 flex-wrap">
-          <div className="bg-slate-200 px-3 py-1 cursor-pointer rounded hover:bg-slate-300 transition-colors">
-            S
-          </div>
-          <div className="bg-slate-200 px-3 py-1 cursor-pointer rounded hover:bg-slate-300 transition-colors">
-            M
-          </div>
-          <div className="bg-slate-200 px-3 py-1 cursor-pointer rounded hover:bg-slate-300 transition-colors">
-            L
-          </div>
-          <div className="bg-slate-200 px-3 py-1 cursor-pointer rounded hover:bg-slate-300 transition-colors">
-            XL
-          </div>
-          <div className="bg-slate-200 px-3 py-1 cursor-pointer rounded hover:bg-slate-300 transition-colors">
-            XXL
-          </div>
+          {["S", "M", "L", "XL", "XXL"].map((size) => (
+            <div
+              key={size}
+              className={`px-3 py-1 rounded cursor-pointer ${
+                productSizes.includes(size)
+                  ? "bg-blue-500 text-white"
+                  : "bg-slate-200"
+              }`}
+              onClick={() => handleSizeSelection(size)}
+            >
+              {size}
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="flex gap-2 mt-2 items-center">
+      {/* Bestseller */}
+      <div className="flex gap-2 items-center">
         <input
           type="checkbox"
-          id="bestseller"
-          className="w-4 h-4 cursor-pointer"
+          checked={isBestSeller}
+          onChange={(e) => setIsBestSeller(e.target.checked)}
         />
-        <label className="cursor-pointer text-sm" htmlFor="bestseller">
-          Add to bestseller
-        </label>
+        <label>Add to bestseller</label>
       </div>
 
       <button
         type="submit"
-        className="w-28 py-3 mt-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+        className="w-32 py-2 bg-black text-white rounded-md"
       >
         Add Product
       </button>

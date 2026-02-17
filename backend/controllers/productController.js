@@ -47,12 +47,12 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 
   const product = await Product.create({
     name: req.body.name,
-    description: req.body.description,
+    description: req.body.description ?? "",
     price: parseFloat(req.body.price),
-    category: req.body.category,
-    subCategory: req.body.subCategory,
+    category: (req.body.category ?? "").trim(),
+    subCategory: (req.body.subCategory ?? "").trim(),
     sizes: sizesArray || [],
-    bestseller: bestsellerValue || false,
+    bestseller: bestsellerValue ?? false,
     image: imageUrls,
     date: Date.now(),
   });
