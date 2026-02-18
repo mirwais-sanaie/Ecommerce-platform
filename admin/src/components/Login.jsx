@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch(
         import.meta.env.VITE_BACKEND_URL + "/api/v1/users/login",
         {
@@ -22,18 +25,21 @@ const Login = ({ setToken }) => {
       );
 
       const data = await response.json();
-      console.log(data);
 
+      setLoading(false);
       if (data) {
         if (data.status) {
           setToken(data.token);
         } else {
-          alert(data.status);
+          toast.error(data.status);
+          throw new Error(data.status);
         }
       } else {
-        alert("An error occurred. Please try again.");
+        toast.error("Login failed");
+        throw new Error("Login failed");
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -71,7 +77,7 @@ const Login = ({ setToken }) => {
             type="submit"
             className="mt-2 w-full py-2 px-4 rounded-md text-white bg-black hover:bg-gray-800 transition-colors"
           >
-            Submit
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

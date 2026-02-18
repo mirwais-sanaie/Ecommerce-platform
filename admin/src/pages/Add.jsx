@@ -1,201 +1,170 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { assets } from "../assets/admin_assets/assets";
 
+const IMAGE_SLOTS = 4;
+const SIZES = ["S", "M", "L", "XL", "XXL"];
+
 const Add = () => {
-  // Store actual files
-  const [imageFiles, setImageFiles] = useState({
-    image1: null,
-    image2: null,
-    image3: null,
-    image4: null,
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      description: "",
+      category: "Men",
+      subCategory: "Topwear",
+      price: "",
+      sizes: [],
+      isBestSeller: false,
+    },
   });
 
-  // Store previews
-  const [imagePreviews, setImagePreviews] = useState({
-    image1: null,
-    image2: null,
-    image3: null,
-    image4: null,
-  });
+  const [images, setImages] = useState(
+    Array(IMAGE_SLOTS).fill({ file: null, preview: null, name: "" }),
+  );
 
-  const [imageNames, setImageNames] = useState({
-    image1: "",
-    image2: "",
-    image3: "",
-    image4: "",
-  });
-
-  const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [productCategory, setProductCategory] = useState("Men");
-  const [productSubCategory, setProductSubCategory] = useState("Topwear");
-  const [productPrice, setProductPrice] = useState("");
-  const [productSizes, setProductSizes] = useState([]);
-  const [isBestSeller, setIsBestSeller] = useState(false);
-
-  // Handle image selection
-  const handleImageChange = (event, imageKey) => {
-    const file = event.target.files[0];
+  // Handle image change
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      alert("File size should not exceed 5MB");
+      toast.error("File size should not exceed 5MB");
       return;
     }
 
-    // Store actual file
-    setImageFiles((prev) => ({
-      ...prev,
-      [imageKey]: file,
-    }));
-
-    // Create preview
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreviews((prev) => ({
-        ...prev,
-        [imageKey]: reader.result,
-      }));
+      const updatedImages = [...images];
+      updatedImages[index] = {
+        file,
+        preview: reader.result,
+        name:
+          file.name.length > 15
+            ? file.name.substring(0, 15) + "..."
+            : file.name,
+      };
+      setImages(updatedImages);
     };
     reader.readAsDataURL(file);
-
-    // Store truncated name
-    const fileNameWithoutExtension = file.name.split(".")[0];
-    const truncatedFileName =
-      fileNameWithoutExtension.length > 12
-        ? fileNameWithoutExtension.substring(0, 12) + "..."
-        : fileNameWithoutExtension;
-
-    setImageNames((prev) => ({
-      ...prev,
-      [imageKey]: truncatedFileName,
-    }));
   };
 
-  const handleSizeSelection = (size) => {
-    setProductSizes((prevSizes) =>
-      prevSizes.includes(size)
-        ? prevSizes.filter((item) => item !== size)
-        : [...prevSizes, size],
-    );
+  // Handle size selection
+  const toggleSize = (size) => {
+    const currentSizes = watch("sizes");
+    const updatedSizes = currentSizes.includes(size)
+      ? currentSizes.filter((s) => s !== size)
+      : [...currentSizes, size];
+
+    setValue("sizes", updatedSizes);
   };
 
-  //submit form data
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData();
-
-    formData.append("name", productName);
-    formData.append("description", productDescription);
-    formData.append("category", productCategory);
-    formData.append("subCategory", productSubCategory);
-    formData.append("price", Number(productPrice));
-    formData.append("isBestSeller", isBestSeller);
-    formData.append("sizes", JSON.stringify(productSizes));
-
-    // Append images (important: field name must match backend)
-    Object.values(imageFiles).forEach((file) => {
-      if (file) {
-        formData.append("image", file);
-      }
-    });
-
+  // Submit
+  const onSubmit = async (data) => {
     try {
+      const formData = new FormData();
+
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("category", data.category);
+      formData.append("subCategory", data.subCategory);
+      formData.append("price", Number(data.price));
+      formData.append("isBestSeller", data.isBestSeller);
+      formData.append("sizes", JSON.stringify(data.sizes));
+
+      images.forEach((img) => {
+        if (img.file) {
+          formData.append("image", img.file); // Must match backend
+        }
+      });
+
       const response = await fetch(
-        import.meta.env.VITE_BACKEND_URL + "/api/v1/products",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/products`,
         {
           method: "POST",
-          body: formData, // 🚀 No JSON, no headers
+          body: formData,
         },
       );
 
-      const data = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to add product");
+        throw new Error(result.message || "Failed to add product");
       }
 
-      console.log("Product added:", data);
-      alert("Product added successfully!");
+      toast.success("Product added successfully!");
+
+      // Reset form + images
+      reset();
+      setImages(
+        Array(IMAGE_SLOTS).fill({ file: null, preview: null, name: "" }),
+      );
     } catch (error) {
-      console.error("Error adding product:", error);
-      alert(error.message);
+      toast.error(error.message || "Something went wrong");
     }
   };
 
   return (
     <form
-      className="flex flex-col gap-4 p-6 max-w-2xl mx-auto"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-6 p-6 max-w-2xl mx-auto"
     >
-      {/* Image upload section */}
+      {/* Images */}
       <div>
         <p className="text-lg font-medium mb-2">Upload Images</p>
         <div className="flex flex-wrap gap-3">
-          {["image1", "image2", "image3", "image4"].map((imageKey, index) => (
-            <label htmlFor={imageKey} key={index} className="cursor-pointer">
+          {images.map((img, index) => (
+            <label key={index} className="cursor-pointer">
               <img
-                src={imagePreviews[imageKey] || assets.upload_area}
-                alt={`Upload area ${index + 1}`}
-                className="w-24 h-24 object-cover border border-gray-300 rounded-md hover:border-gray-400"
+                src={img.preview || assets.upload_area}
+                alt="upload"
+                className="w-24 h-24 object-cover border rounded-md"
               />
               <input
                 type="file"
-                id={imageKey}
                 hidden
                 accept="image/*"
-                onChange={(e) => handleImageChange(e, imageKey)}
+                onChange={(e) => handleImageChange(e, index)}
               />
-              <p className="mt-2 text-sm text-center">
-                {imageNames[imageKey] || "Choose a file"}
+              <p className="text-sm text-center mt-1">
+                {img.name || "Choose file"}
               </p>
             </label>
           ))}
         </div>
       </div>
 
-      {/* Product name */}
-      <div>
-        <p className="mb-2">Product name</p>
-        <input
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          type="text"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          required
-        />
-      </div>
+      {/* Name */}
+      <input
+        {...register("name", { required: true })}
+        placeholder="Product Name"
+        className="input"
+      />
 
       {/* Description */}
-      <div>
-        <p className="mb-2">Product description</p>
-        <textarea
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          rows="4"
-          value={productDescription}
-          onChange={(e) => setProductDescription(e.target.value)}
-          required
-        />
-      </div>
+      <textarea
+        {...register("description", { required: true })}
+        rows="4"
+        placeholder="Product Description"
+        className="input"
+      />
 
-      {/* Category, subcategory, price */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <select
-          value={productCategory}
-          onChange={(e) => setProductCategory(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-md"
-        >
+      {/* Category & Subcategory */}
+      <div className="flex gap-4">
+        <select {...register("category")} className="input">
           <option value="Men">Men</option>
           <option value="Women">Women</option>
           <option value="Kids">Kids</option>
         </select>
 
-        <select
-          value={productSubCategory}
-          onChange={(e) => setProductSubCategory(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-md"
-        >
+        <select {...register("subCategory")} className="input">
           <option value="Topwear">Topwear</option>
           <option value="Bottomwear">Bottomwear</option>
           <option value="Winterwear">Winterwear</option>
@@ -204,27 +173,25 @@ const Add = () => {
         <input
           type="number"
           min="0"
-          value={productPrice}
-          onChange={(e) => setProductPrice(e.target.value)}
+          {...register("price", { required: true })}
           placeholder="Price"
-          className="px-3 py-2 border border-gray-300 rounded-md"
-          required
+          className="input"
         />
       </div>
 
       {/* Sizes */}
       <div>
-        <p className="mb-2">Product Sizes</p>
+        <p className="mb-2">Sizes</p>
         <div className="flex gap-3 flex-wrap">
-          {["S", "M", "L", "XL", "XXL"].map((size) => (
+          {SIZES.map((size) => (
             <div
               key={size}
+              onClick={() => toggleSize(size)}
               className={`px-3 py-1 rounded cursor-pointer ${
-                productSizes.includes(size)
+                watch("sizes").includes(size)
                   ? "bg-blue-500 text-white"
                   : "bg-slate-200"
               }`}
-              onClick={() => handleSizeSelection(size)}
             >
               {size}
             </div>
@@ -233,20 +200,17 @@ const Add = () => {
       </div>
 
       {/* Bestseller */}
-      <div className="flex gap-2 items-center">
-        <input
-          type="checkbox"
-          checked={isBestSeller}
-          onChange={(e) => setIsBestSeller(e.target.checked)}
-        />
-        <label>Add to bestseller</label>
-      </div>
+      <label className="flex items-center gap-2">
+        <input type="checkbox" {...register("isBestSeller")} />
+        Add to bestseller
+      </label>
 
       <button
         type="submit"
-        className="w-32 py-2 bg-black text-white rounded-md"
+        disabled={isSubmitting}
+        className="bg-black text-white py-2 rounded-md"
       >
-        Add Product
+        {isSubmitting ? "Adding..." : "Add Product"}
       </button>
     </form>
   );

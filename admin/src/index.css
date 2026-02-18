@@ -9,3 +9,20 @@
   background-color: #ffebf5;
   border-color: #fb80a6;
 }
+
+.input {
+  @apply w-full px-4 py-2 rounded-sm
+  border
+  bg-white
+  shadow-sm
+  transition-all duration-300 ease-in-out
+  outline-none;
+}
+
+.input:hover {
+  @apply border-gray-300;
+}
+
+.input:focus {
+  @apply border-blue-500 ring-2 ring-blue-200 shadow-lg;
+}

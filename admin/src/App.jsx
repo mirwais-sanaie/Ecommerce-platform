@@ -6,6 +6,7 @@ import Orders from "./pages/Orders";
 import Add from "./pages/Add";
 import { useState } from "react";
 import Login from "./components/Login";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [token, setToken] = useState("");
@@ -28,6 +29,18 @@ function App() {
               </Routes>
             </div>
           </div>
+
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </>
       )}
     </div>
