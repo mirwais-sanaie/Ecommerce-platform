@@ -40,7 +40,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   }
 
   // Parse bestseller
-  let bestsellerValue = req.body.bestseller;
+  let bestsellerValue = req.body.isBestSeller;
   if (typeof bestsellerValue === "string") {
     bestsellerValue = bestsellerValue === "true" || bestsellerValue === "1";
   }
@@ -52,7 +52,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     category: (req.body.category ?? "").trim(),
     subCategory: (req.body.subCategory ?? "").trim(),
     sizes: sizesArray || [],
-    bestseller: bestsellerValue ?? false,
+    isBestSeller: bestsellerValue ?? false,
     image: imageUrls,
     date: Date.now(),
   });
@@ -117,9 +117,9 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   }
 
   // Parse bestseller if provided as string
-  if (updateData.bestseller && typeof updateData.bestseller === "string") {
-    updateData.bestseller =
-      updateData.bestseller === "true" || updateData.bestseller === "1";
+  if (updateData.isBestSeller && typeof updateData.isBestSeller === "string") {
+    updateData.isBestSeller =
+      updateData.isBestSeller === "true" || updateData.isBestSeller === "1";
   }
 
   // Parse price if provided as string
@@ -143,6 +143,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {
+  console.log(req.params.id);
   const product = await Product.findByIdAndDelete(req.params.id);
 
   if (!product) {
