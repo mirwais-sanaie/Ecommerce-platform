@@ -13,21 +13,19 @@ function Login() {
   });
 
   const handleChange = (e) => {
-    const { email, value } = e.target;
-    setFormData((prev) => ({ ...prev, [email]: value }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const result = await login(formData.email, formData.password);
-    console.log(formData);
 
     if (result.success) {
       navigate("/");
     } else {
       toast.error(result.error || "Login failed. Please try again.");
-      console.log("problem");
     }
   };
 
@@ -46,6 +44,7 @@ function Login() {
             <label className="block text-sm text-gray-600 mb-1">Email *</label>
             <input
               type="email"
+              name="email"
               value={formData.email}
               onChange={handleChange}
               required
@@ -59,6 +58,7 @@ function Login() {
             </label>
             <input
               type="password"
+              name="password"
               value={formData.password}
               onChange={handleChange}
               required
