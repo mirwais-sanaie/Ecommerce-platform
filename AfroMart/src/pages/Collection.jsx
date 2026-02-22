@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
-  const { products, search, showSearch } = useShopContext();
+  const { products, productsLoading, search, showSearch } = useShopContext();
 
   const [showFilter, setShowFilter] = useState(false);
   const [category, setCategory] = useState([]);
@@ -15,14 +15,14 @@ const Collection = () => {
   const toggleCategory = (e) => {
     const value = e.target.value;
     setCategory((prev) =>
-      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value]
+      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value],
     );
   };
 
   const toggleSubCategory = (e) => {
     const value = e.target.value;
     setSubCategory((prev) =>
-      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value]
+      prev.includes(value) ? prev.filter((c) => c !== value) : [...prev, value],
     );
   };
 
@@ -33,7 +33,7 @@ const Collection = () => {
       const searchText = search.toLowerCase();
 
       productsCpy = productsCpy.filter((p) =>
-        p.name.toLowerCase().includes(searchText)
+        p.name.toLowerCase().includes(searchText),
       );
     }
 
@@ -43,7 +43,7 @@ const Collection = () => {
 
     if (subCategory.length > 0) {
       productsCpy = productsCpy.filter((p) =>
-        subCategory.includes(p.subCategory)
+        subCategory.includes(p.subCategory),
       );
     }
 
@@ -65,6 +65,14 @@ const Collection = () => {
   })();
 
   /* ---------------- UI ---------------- */
+
+  if (productsLoading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col sm:flex-row gap-6 pt-10 border-t">

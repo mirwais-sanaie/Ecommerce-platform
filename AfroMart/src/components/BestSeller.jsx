@@ -6,7 +6,7 @@ const BestSeller = () => {
   const { products } = useShopContext();
 
   const bestSeller = products
-    ? products.filter((item) => item.bestseller).slice(0, 5)
+    ? products.filter((item) => item.isBestSeller).slice(0, 5)
     : [];
 
   return (
