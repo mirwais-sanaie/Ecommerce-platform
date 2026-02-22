@@ -1,10 +1,7 @@
 import { useState, createContext, useContext, useEffect } from "react";
-import { products } from "./../assets/frontend_assets/assets.js";
 
 const CART_STORAGE_KEY = "afromart_cart";
 const ORDERS_STORAGE_KEY = "afromart_orders";
-const USERS_STORAGE_KEY = "afromart_users";
-const AUTH_STORAGE_KEY = "afromart_auth";
 
 const ShopContext = createContext(undefined);
 
@@ -42,24 +39,6 @@ function saveOrdersToStorage(orders) {
   }
 }
 
-function loadUsersFromStorage() {
-  try {
-    const stored = localStorage.getItem(USERS_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-}
-
-function loadAuthFromStorage() {
-  try {
-    const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : null;
-  } catch {
-    return null;
-  }
-}
-
 export function ShopProvider({ children }) {
   const currency = "$";
   const deliveryFee = 5.99;
@@ -67,8 +46,34 @@ export function ShopProvider({ children }) {
   const [showSearch, setShowSearch] = useState(true);
   const [cartItems, setCartItems] = useState(loadCartFromStorage);
   const [orders, setOrders] = useState(loadOrdersFromStorage);
-  const [users, setUsers] = useState(loadUsersFromStorage);
-  const [user, setUser] = useState(loadAuthFromStorage);
+
+  //products would normally be fetched from an API, but we'll hardcode some sample data here
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+
+  const fetchProducts = async () => {
+    try {
+      setProductsLoading(true);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/products`,
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok) {
+        throw new Error(data.status || "Failed to fetch products");
+      }
+
+      // Adjust depending on your backend response structure
+      setProducts(data.data.products || []);
+    } catch (error) {
+      console.error("Error fetching products:", error.message);
+    } finally {
+      setProductsLoading(false);
+    }
+  };
 
   useEffect(() => {
     saveCartToStorage(cartItems);
@@ -78,16 +83,20 @@ export function ShopProvider({ children }) {
     saveOrdersToStorage(orders);
   }, [orders]);
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const addToCart = (productId, name, price, size, image, quantity = 1) => {
     setCartItems((prev) => {
       const existing = prev.find(
-        (item) => item.id === productId && item.size === size
+        (item) => item.id === productId && item.size === size,
       );
       if (existing) {
         return prev.map((item) =>
           item.id === productId && item.size === size
             ? { ...item, quantity: item.quantity + quantity }
-            : item
+            : item,
         );
       }
       return [...prev, { id: productId, name, price, size, image, quantity }];
@@ -96,7 +105,7 @@ export function ShopProvider({ children }) {
 
   const removeFromCart = (productId, size) => {
     setCartItems((prev) =>
-      prev.filter((item) => !(item.id === productId && item.size === size))
+      prev.filter((item) => !(item.id === productId && item.size === size)),
     );
   };
 
@@ -109,8 +118,8 @@ export function ShopProvider({ children }) {
       prev.map((item) =>
         item.id === productId && item.size === size
           ? { ...item, quantity }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -119,53 +128,6 @@ export function ShopProvider({ children }) {
 
   const getCartSubtotal = () =>
     cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  const signup = (name, email, password) => {
-    const existing = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase()
-    );
-    if (existing) return { success: false, error: "Email already registered" };
-
-    const newUser = {
-      id: `user-${Date.now()}`,
-      name,
-      email: email.toLowerCase(),
-      password,
-    };
-    const updated = [...users, newUser];
-    setUsers(updated);
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(updated));
-    setUser({ id: newUser.id, name: newUser.name, email: newUser.email });
-    localStorage.setItem(
-      AUTH_STORAGE_KEY,
-      JSON.stringify({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-      })
-    );
-    return { success: true };
-  };
-
-  const login = (email, password) => {
-    const found = users.find(
-      (u) =>
-        u.email.toLowerCase() === email.toLowerCase() && u.password === password
-    );
-    if (!found) return { success: false, error: "Invalid email or password" };
-
-    setUser({ id: found.id, name: found.name, email: found.email });
-    localStorage.setItem(
-      AUTH_STORAGE_KEY,
-      JSON.stringify({ id: found.id, name: found.name, email: found.email })
-    );
-    return { success: true };
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-  };
 
   const placeOrder = (shippingDetails) => {
     if (cartItems.length === 0) return null;
@@ -190,6 +152,7 @@ export function ShopProvider({ children }) {
 
   const value = {
     products,
+    productsLoading,
     currency,
     deliveryFee,
     search,
@@ -204,10 +167,6 @@ export function ShopProvider({ children }) {
     getCartSubtotal,
     orders,
     placeOrder,
-    user,
-    signup,
-    login,
-    logout,
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

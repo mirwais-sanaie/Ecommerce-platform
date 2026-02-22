@@ -23,6 +23,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     );
   }
 
+  // 2) Validate passwords match before creating user
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new AppError("Passwords do not match", 400));
+  }
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -31,10 +36,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     photo: req.body.photo,
     role: req.body.role,
   });
-
-  if (req.body.password !== req.body.confirmPassword) {
-    return next(new AppError("Passwords do not match", 400));
-  }
 
   const token = signToken(newUser._id);
 

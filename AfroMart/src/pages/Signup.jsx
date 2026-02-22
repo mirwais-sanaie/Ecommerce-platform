@@ -1,47 +1,44 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useShopContext } from "../contexts/ShopContext";
 import Title from "../components/Title";
+import { useAuthContext } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 function Signup() {
   const navigate = useNavigate();
-  const { signup } = useShopContext();
+  const { signup, isLoading } = useAuthContext();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
-    setLoading(true);
-    const result = signup(formData.name, formData.email, formData.password);
-    setLoading(false);
+    const result = await signup(
+      formData.name,
+      formData.email,
+      formData.password,
+      formData.confirmPassword,
+    );
 
-    if (result.success) {
+    if (result?.success) {
+      toast.success("Account created successfully!");
       navigate("/");
     } else {
-      setError(result.error);
+      toast.error(result?.error || "Signup failed. Please try again.");
     }
   };
 
@@ -56,11 +53,6 @@ function Signup() {
 
       <div className="w-full max-w-md border border-gray-200 p-8 bg-gray-50/50">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
-              {error}
-            </div>
-          )}
           <div>
             <label className="block text-sm text-gray-600 mb-1">
               Full Name *
@@ -97,9 +89,9 @@ function Signup() {
               value={formData.password}
               onChange={handleChange}
               required
-              minLength={6}
+              minLength={8}
               className="w-full border border-gray-300 px-4 py-2 text-sm"
-              placeholder="At least 6 characters"
+              placeholder="At least 8 characters"
             />
           </div>
           <div>
@@ -118,10 +110,10 @@ function Signup() {
           </div>
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="w-full bg-black text-white py-3 text-sm hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {loading ? "Creating account..." : "SIGN UP"}
+            {isLoading ? "Creating account..." : "SIGN UP"}
           </button>
         </form>
 

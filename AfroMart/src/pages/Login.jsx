@@ -1,28 +1,33 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useShopContext } from "../contexts/ShopContext";
 import Title from "../components/Title";
+import { useAuthContext } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
-  const { login } = useShopContext();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { login, isLoading } = useAuthContext();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { email, value } = e.target;
+    setFormData((prev) => ({ ...prev, [email]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
 
-    const result = login(email, password);
-    setLoading(false);
+    const result = await login(formData.email, formData.password);
+    console.log(formData);
 
     if (result.success) {
       navigate("/");
     } else {
-      setError(result.error);
+      toast.error(result.error || "Login failed. Please try again.");
+      console.log("problem");
     }
   };
 
@@ -37,17 +42,12 @@ function Login() {
 
       <div className="w-full max-w-md border border-gray-200 p-8 bg-gray-50/50">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
-              {error}
-            </div>
-          )}
           <div>
             <label className="block text-sm text-gray-600 mb-1">Email *</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
               required
               className="w-full border border-gray-300 px-4 py-2 text-sm"
               placeholder="you@example.com"
@@ -59,8 +59,8 @@ function Login() {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
               className="w-full border border-gray-300 px-4 py-2 text-sm"
               placeholder="••••••••"
@@ -68,10 +68,10 @@ function Login() {
           </div>
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="w-full bg-black text-white py-3 text-sm hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {loading ? "Signing in..." : "LOGIN"}
+            {isLoading ? "Signing in..." : "LOGIN"}
           </button>
         </form>
 
