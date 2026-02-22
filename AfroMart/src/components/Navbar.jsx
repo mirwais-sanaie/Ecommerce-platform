@@ -2,13 +2,15 @@ import { NavLink, Link } from "react-router-dom";
 import { assets } from "./../assets/frontend_assets/assets.js";
 import { useState, useRef, useEffect } from "react";
 import { useShopContext } from "../contexts/ShopContext.jsx";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [profileMenu, setProfileMenu] = useState(false);
   const profileRef = useRef(null);
 
-  const { setShowSearch, getCartTotalCount, user, logout } = useShopContext();
+  const { setShowSearch, getCartTotalCount } = useShopContext();
+  const { user, logout } = useAuthContext();
 
   useEffect(() => {
     function handleClickOutside(event) {

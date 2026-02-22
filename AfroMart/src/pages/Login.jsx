@@ -20,12 +20,17 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await login(formData.email, formData.password);
+    try {
+      const result = await login(formData.email, formData.password);
 
-    if (result.success) {
-      navigate("/");
-    } else {
-      toast.error(result.error || "Login failed. Please try again.");
+      if (result?.success) {
+        toast.success("Welcome back!");
+        navigate("/");
+      } else {
+        toast.error(result?.error || "Login failed. Please try again.");
+      }
+    } catch (err) {
+      toast.error(err?.message || "Login failed. Please try again.");
     }
   };
 
