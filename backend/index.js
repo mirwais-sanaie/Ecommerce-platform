@@ -9,6 +9,7 @@ const connectDB = require("./config/db");
 require("./config/cloudinary");
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
+const cartRoute = require("./routes/cartRoute");
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/products", productRoute);
+app.use("/api/v1/cart", cartRoute);
 
 // Global error handler (must be after all routes)
 const errorHandler = require("./utils/errorHandler");

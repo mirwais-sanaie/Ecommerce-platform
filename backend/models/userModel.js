@@ -2,6 +2,21 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
+const cartSchema = new mongoose.Schema({
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+  size: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+    default: 1,
+  },
+});
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -30,9 +45,10 @@ const userSchema = new mongoose.Schema({
       message: "passwords are not the same!",
     },
   },
+  cart: [cartSchema],
 });
 
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified("password")) {
     return next();

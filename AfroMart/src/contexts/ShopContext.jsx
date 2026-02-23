@@ -60,7 +60,6 @@ export function ShopProvider({ children }) {
       );
 
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         throw new Error(data.status || "Failed to fetch products");
