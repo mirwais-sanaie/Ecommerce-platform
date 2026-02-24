@@ -16,6 +16,10 @@ const getUser = async (userId, next) => {
 exports.addToCart = catchAsync(async (req, res, next) => {
   const { productId, size, quantity = 1 } = req.body;
 
+  if (!productId) {
+    return next(new AppError("productId is required", 400));
+  }
+
   const product = await Product.findById(productId);
   if (!product) {
     return next(new AppError("Product not found", 404));
@@ -33,13 +37,16 @@ exports.addToCart = catchAsync(async (req, res, next) => {
       (item.size || "") === (size || ""),
   );
 
+  const qtyToAddRaw = Number(quantity);
+  const qtyToAdd = Number.isFinite(qtyToAddRaw) && qtyToAddRaw > 0 ? qtyToAddRaw : 1;
+
   if (existingItem) {
-    existingItem.quantity += Number(quantity);
+    existingItem.quantity += qtyToAdd;
   } else {
     user.cart.push({
       product: productId,
       size,
-      quantity: Number(quantity),
+      quantity: qtyToAdd,
     });
   }
 
