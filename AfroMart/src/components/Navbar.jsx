@@ -75,7 +75,7 @@ function Navbar() {
             >
               <div className="flex flex-col rounded gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 shadow-lg">
                 <Link
-                  to="/"
+                  to="/profile"
                   className="hover:text-black"
                   onClick={() => setProfileMenu(false)}
                 >

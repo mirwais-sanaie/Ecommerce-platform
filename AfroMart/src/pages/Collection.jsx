@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useShopContext } from "../contexts/ShopContext";
 import { assets } from "../assets/frontend_assets/assets";
 import Title from "../components/Title";
@@ -11,6 +11,8 @@ const Collection = () => {
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
+  const [visibleCount, setVisibleCount] = useState(10);
+  const loadMoreRef = useRef(null);
 
   const toggleCategory = (e) => {
     const value = e.target.value;
@@ -63,6 +65,39 @@ const Collection = () => {
 
     return productsCpy;
   })();
+
+  const visibleProducts = filterProducts.slice(0, visibleCount);
+
+  useEffect(() => {
+    // Reset visible count when filters or search change
+    setVisibleCount(10);
+  }, [search, showSearch, category, subCategory, sortType]);
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+    if (visibleCount >= filterProducts.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) => {
+            const next = prev + 10;
+            return next > filterProducts.length ? filterProducts.length : next;
+          });
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px 200px 0px",
+        threshold: 0.1,
+      },
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => observer.disconnect();
+  }, [filterProducts.length, visibleCount]);
 
   /* ---------------- UI ---------------- */
 
@@ -155,7 +190,7 @@ const Collection = () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filterProducts.map((product) => (
+          {visibleProducts.map((product) => (
             <ProductItem
               key={product._id}
               id={product._id}
@@ -164,6 +199,15 @@ const Collection = () => {
               image={product.image}
             />
           ))}
+        </div>
+        <div ref={loadMoreRef} className="h-10 mt-6 flex items-center justify-center">
+          {visibleCount < filterProducts.length ? (
+            <span className="text-xs text-gray-500">Loading more products...</span>
+          ) : (
+            filterProducts.length > 0 && (
+              <span className="text-xs text-gray-400">You&apos;ve reached the end.</span>
+            )
+          )}
         </div>
       </div>
     </div>

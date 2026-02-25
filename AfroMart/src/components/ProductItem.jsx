@@ -11,6 +11,8 @@ const ProductItem = ({ id, image, name, price }) => {
       <div className="aspect-square overflow-hidden bg-gray-100">
         <img
           className="w-full h-full object-cover hover:scale-110 transition ease-in-out"
+          loading="lazy"
+          decoding="async"
           src={imageUrl}
           alt={name}
         />

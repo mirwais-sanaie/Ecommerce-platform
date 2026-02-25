@@ -70,6 +70,8 @@ const Product = () => {
               <img
                 key={index}
                 src={img}
+                loading="lazy"
+                decoding="async"
                 onClick={() => setImage(img)}
                 className={`w-20 cursor-pointer border ${
                   img === image ? "border-black" : ""
@@ -80,7 +82,13 @@ const Product = () => {
           </div>
 
           <div className="w-full">
-            <img src={image} alt={productData.name} className="w-full h-auto" />
+            <img
+              src={image}
+              loading="lazy"
+              decoding="async"
+              alt={productData.name}
+              className="w-full h-auto"
+            />
           </div>
         </div>
 
